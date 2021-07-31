@@ -16,9 +16,9 @@ function Product({ productData }) {
       </div>
       <div className="product__buttons">
         <Link to={`/product/itemID`}>
-          <button className="buttons__view">View Item</button>
+          <button className="buttons buttons__view">View Item</button>
         </Link>
-        <button className="buttons__add">Add To Cart</button>
+        <button className="buttons buttons__add">Add To Cart</button>
       </div>
     </div>
   );
