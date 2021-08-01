@@ -1,7 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./product.scss";
-function Product({ productData }) {
+import { connect } from "react-redux";
+import {
+  addToCart,
+  LoadCurrentItem,
+} from "../../../redux/Shopping/shopping-actions";
+function Product({ productData, addToCart, LoadCurrentItem }) {
   return (
     <div className="product">
       <img
@@ -15,13 +20,30 @@ function Product({ productData }) {
         <p className="details__price">$ {productData.price}</p>
       </div>
       <div className="product__buttons">
-        <Link to={`/product/itemID`}>
-          <button className="buttons buttons__view">View Item</button>
+        <Link to={`/product/${productData.id}`}>
+          <button
+            onClick={() => LoadCurrentItem(productData)}
+            className="buttons buttons__view"
+          >
+            View Item
+          </button>
         </Link>
-        <button className="buttons buttons__add">Add To Cart</button>
+        <button
+          onClick={() => addToCart(productData.id)}
+          className="buttons buttons__add"
+        >
+          Add To Cart
+        </button>
       </div>
     </div>
   );
 }
 
-export default Product;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToCart: (id) => dispatch(addToCart(id)),
+    LoadCurrentItem: (item) => dispatch(LoadCurrentItem(item)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Product);

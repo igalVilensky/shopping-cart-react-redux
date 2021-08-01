@@ -1,11 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./cart.scss";
-function Cart() {
+import CartItem from "./CartItem/CartItem";
+import { connect } from "react-redux";
+function Cart({ cart }) {
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
+
+  useEffect(() => {
+    let items = 0;
+    let price = 0;
+    cart.forEach((item) => {
+      items += item.qty;
+      price += item.qty * item.price;
+    });
+    setTotalPrice(price);
+    setTotalItems(items);
+  }, [cart, totalPrice, totalItems, setTotalPrice, setTotalItems]);
   return (
     <div className="cart">
-      <h2>Cart</h2>
+      <div className="cartItems">
+        {cart.map((item) => (
+          <CartItem key={item.id} itemData={item} />
+        ))}
+      </div>
+      <div className="cart__summary">
+        <h4 className="summary__title">Cart Summary</h4>
+      </div>
+      <div className="summary__price">
+        <span>TOTAL: ({totalItems} items)</span>
+        <span>$ {totalPrice}</span>
+      </div>
+      <button className="summary__checkoutBtn">Proceed To Checkout</button>
     </div>
   );
 }
 
-export default Cart;
+const mapStateToProps = (state) => {
+  return {
+    cart: state.shop.cart,
+  };
+};
+
+export default connect(mapStateToProps)(Cart);
