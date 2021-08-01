@@ -40,9 +40,11 @@ function CartItem({ itemData, removeFromCart, adjustQty }) {
           onClick={() => removeFromCart(itemData.id)}
           className="actions__deleteItemBtn"
         >
+          {/* <img src={`${process.env.PUBLIC_URL}/assets/me.png`} alt="me" /> */}
+
           <img
             src="https://img-premium.flaticon.com/png/512/484/premium/484611.png?token=exp=1627758419~hmac=c32a0339b340b21c1f4e612f79e8aa5d"
-            alt=""
+            alt="Remove item"
           />
         </button>
       </div>
